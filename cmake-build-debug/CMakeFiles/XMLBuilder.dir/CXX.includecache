@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/AssocVec.h
+string
+-
+map
+-
+vector
+-
+
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/Element.h
+string
+-
+map
+-
+AssocVec.h
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/AssocVec.h
+
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/Tree.cpp
+Tree.h
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/Tree.h
+utility
+-
+
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/Tree.h
+map
+-
+string
+-
+typeinfo
+-
+Element.h
+/Users/malcolmhall/Desktop/XMLBuilder/XMLBuilder/Element.h
+
