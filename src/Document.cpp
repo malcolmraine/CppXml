@@ -12,7 +12,8 @@
 **************************************************************************************************/
 #include <ctime>
 #include <utility>
-#include "Document.h"
+#include "../include/Document.h"
+#include "../include/helper.h"
 
 
 /******************************************************************************
@@ -20,7 +21,7 @@
  *
  * @brief
  */
-Document::Document(std::string docName) {
+CppXml::Document::Document(std::string docName) {
     name = std::move(docName);
     encoding = DEFAULT_ENCODING;
     version = 1.0;
@@ -33,8 +34,17 @@ Document::Document(std::string docName) {
  *
  * @brief
  */
-Document::~Document() {
+CppXml::Document::~Document() {
 
+}
+
+
+/******************************************************************************
+ * @brief
+ * @param rootName
+ */
+void CppXml::Document::setRoot(std::string rootName) {
+    root->name = std::move(rootName);
 }
 
 
@@ -43,11 +53,10 @@ Document::~Document() {
  *
  * @brief
  */
-void Document::addMetaData() {
+void CppXml::Document::addMetaData() {
     auto *newElement = new Element("meta");
 
-    if (root != nullptr)
-    {
+    if (root != nullptr) {
         newElement->parent = root;
         newElement->nestLvl = root->nestLvl + 1;
         Element *e;
@@ -82,7 +91,7 @@ void Document::addMetaData() {
  * @brief
  * @return
  */
-std::string Document::xmlHeader() {
+std::string CppXml::Document::xmlHeader() {
     return getHeader();
 }
 
@@ -93,16 +102,18 @@ std::string Document::xmlHeader() {
  * @brief
  * @return
  */
-std::string Document::getHeader() const {
+std::string CppXml::Document::getHeader() const {
     return "<?xml version=\""
-            + std::to_string(version)
-            + "\" standalone=\""
-            + (standalone ? "yes" : "no")
-            + "\" ?>";
+           + std::to_string(version)
+           + "\" standalone=\""
+           + (standalone ? "yes" : "no")
+           + "\" ?>";
 }
 
 
-
+std::string CppXml::Document::toString() {
+    return root->elementToString();
+}
 
 /**************************************************************************************************
 *       END OF FILE

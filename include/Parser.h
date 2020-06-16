@@ -13,9 +13,11 @@
 *       INCLUDES AND DECLARATIONS
 **************************************************************************************************/
 
-class Parser {
+namespace CppXml {
+    class Parser {
 
-};
+    };
+}
 
 
 #endif //XMLBUILDER_PARSER_H

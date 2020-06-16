@@ -16,39 +16,48 @@
 #include <map>
 #include <vector>
 
+namespace CppXml {
 
 /******************************************************************************
  * @brief
  * @tparam T
  */
-template<class T>
-class AssocVec {
-public:
-    AssocVec();
-    ~AssocVec();
+    template<class T>
+    class AssocVec {
+    public:
+        AssocVec();
 
-    /* Overloaded [] operators so objects can be retrieved by key or index   */
-    T operator[](const std::string& key);
-    T operator[](int idx);
+        ~AssocVec();
 
-    void push(std::string key, T object);
-    void pop();
-    ssize_t size();
-    bool empty();
-    int count(const std::string& key);
-    void erase(const std::string& key);
-    void erase(int idx);
+        /* Overloaded [] operators so objects can be retrieved by key or index   */
+        T operator[](const std::string &key);
 
-protected:
-    /* Map to lookup vector index by key    */
-    std::map<std::string, int> _idxKeyMap;
+        T operator[](int idx);
 
-    /* Map to lookup map key by vector index. This uses a vector for simplicity, however.*/
-    std::vector<std::string> _keyIdxMap;
+        void push(std::string key, T object);
 
-    /* Vector to store the objects being held by this class */
-    std::vector<T> _objectStore;
-};
+        void pop();
+
+        ssize_t size();
+
+        bool empty();
+
+        int count(const std::string &key);
+
+        void erase(const std::string &key);
+
+        void erase(int idx);
+
+    protected:
+        /* Map to lookup vector index by key    */
+        std::map<std::string, int> _idxKeyMap;
+
+        /* Map to lookup map key by vector index. This uses a vector for simplicity, however.*/
+        std::vector<std::string> _keyIdxMap;
+
+        /* Vector to store the objects being held by this class */
+        std::vector<T> _objectStore;
+    };
 
 
 /******************************************************************************
@@ -57,10 +66,10 @@ protected:
  * @brief
  * @tparam T
  */
-template<class T>
-AssocVec<T>::AssocVec() {
+    template<class T>
+    AssocVec<T>::AssocVec() {
 
-}
+    }
 
 
 /******************************************************************************
@@ -69,10 +78,10 @@ AssocVec<T>::AssocVec() {
  * @brief
  * @tparam T
  */
-template<class T>
-AssocVec<T>::~AssocVec() {
+    template<class T>
+    AssocVec<T>::~AssocVec() {
 
-}
+    }
 
 
 /******************************************************************************
@@ -83,11 +92,10 @@ AssocVec<T>::~AssocVec() {
  * @param key
  * @return
  */
-template<class T>
-T AssocVec<T>::operator[](const std::string& key)
-{
-    return _objectStore[_idxKeyMap[key]];
-}
+    template<class T>
+    T AssocVec<T>::operator[](const std::string &key) {
+        return _objectStore[_idxKeyMap[key]];
+    }
 
 
 /******************************************************************************
@@ -98,11 +106,10 @@ T AssocVec<T>::operator[](const std::string& key)
  * @param idx
  * @return
  */
-template<class T>
-T AssocVec<T>::operator[](int idx)
-{
-    return _objectStore[idx];
-}
+    template<class T>
+    T AssocVec<T>::operator[](int idx) {
+        return _objectStore[idx];
+    }
 
 
 /******************************************************************************
@@ -113,13 +120,12 @@ T AssocVec<T>::operator[](int idx)
  * @param key
  * @param object
  */
-template<class T>
-void AssocVec<T>::push(std::string key, T object)
-{
-    _objectStore.push_back(object);
-    _keyIdxMap.push_back(key);
-    _idxKeyMap.insert(std::pair<std::string , int>(key, _objectStore.size() - 1));
-}
+    template<class T>
+    void AssocVec<T>::push(std::string key, T object) {
+        _objectStore.push_back(object);
+        _keyIdxMap.push_back(key);
+        _idxKeyMap.insert(_idxKeyMap.begin(), std::pair<std::string, int>(key, _objectStore.size() - 1));
+    }
 
 
 /******************************************************************************
@@ -128,11 +134,11 @@ void AssocVec<T>::push(std::string key, T object)
  * @brief
  * @tparam T
  */
-template<class T>
-void AssocVec<T>::pop() {
-    int idx = _objectStore.size() - 1;
-    //std::string key = _keyIdxMap[idx];
-}
+    template<class T>
+    void AssocVec<T>::pop() {
+        int idx = _objectStore.size() - 1;
+        //std::string key = _keyIdxMap[idx];
+    }
 
 
 /******************************************************************************
@@ -142,11 +148,10 @@ void AssocVec<T>::pop() {
  * @tparam T
  * @return
  */
-template<class T>
-ssize_t AssocVec<T>::size()
-{
-    return _objectStore.size();
-}
+    template<class T>
+    ssize_t AssocVec<T>::size() {
+        return _objectStore.size();
+    }
 
 
 /******************************************************************************
@@ -156,10 +161,10 @@ ssize_t AssocVec<T>::size()
  * @tparam T
  * @return
  */
-template<class T>
-bool AssocVec<T>::empty() {
-    return size() == 0;
-}
+    template<class T>
+    bool AssocVec<T>::empty() {
+        return size() == 0;
+    }
 
 
 /******************************************************************************
@@ -170,10 +175,10 @@ bool AssocVec<T>::empty() {
  * @param key
  * @return
  */
-template<class T>
-int AssocVec<T>::count(const std::string& key) {
-    return _idxKeyMap.count(key);
-}
+    template<class T>
+    int AssocVec<T>::count(const std::string &key) {
+        return _idxKeyMap.count(key);
+    }
 
 
 /******************************************************************************
@@ -183,16 +188,15 @@ int AssocVec<T>::count(const std::string& key) {
  * @tparam T
  * @param key
  */
-template<class T>
-void AssocVec<T>::erase(const std::string& key) {
-    int vecIdx = _idxKeyMap[key];
-    _objectStore.erase(vecIdx);
+    template<class T>
+    void AssocVec<T>::erase(const std::string &key) {
+        int vecIdx = _idxKeyMap[key];
+        _objectStore.erase(vecIdx);
 
-    for (int i = vecIdx; i < _objectStore.size(); i++)
-    {
-        _idxKeyMap[_keyIdxMap[i]]--;
+        for (int i = vecIdx; i < _objectStore.size(); i++) {
+            _idxKeyMap[_keyIdxMap[i]]--;
+        }
     }
-}
 
 
 /******************************************************************************
@@ -202,11 +206,11 @@ void AssocVec<T>::erase(const std::string& key) {
  * @tparam T
  * @param idx
  */
-template<class T>
-void AssocVec<T>::erase(int idx) {
+    template<class T>
+    void AssocVec<T>::erase(int idx) {
 
+    }
 }
-
 
 #endif //XMLBUILDER_ASSOCVEC_H
 /**************************************************************************************************

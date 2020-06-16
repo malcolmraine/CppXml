@@ -1,17 +1,25 @@
 cmake_minimum_required(VERSION 3.16)
-project(XMLBuilder)
+project(CppXml)
 
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(
         XMLBuilder
         main.cpp
-        XMLBuilder/XMLBuilder.cpp
-        XMLBuilder/XMLBuilder.h
-        XMLBuilder/Tree.cpp
-        XMLBuilder/Tree.h
-        XMLBuilder/helper.cpp
-        XMLBuilder/helper.h
-        XMLBuilder/Element.cpp
-        XMLBuilder/Element.h
-        XMLBuilder/Document.cpp XMLBuilder/Document.h XMLBuilder/AssocVec.cpp XMLBuilder/AssocVec.h XMLBuilder/Tokenizer.cpp XMLBuilder/Tokenizer.h XMLBuilder/Parser.cpp XMLBuilder/Parser.h)
+        src/XMLBuilder.cpp
+        include/XMLBuilder.h
+        src/Tree.cpp
+        include/Tree.h
+        src/helper.cpp
+        include/helper.h
+        src/Element.cpp
+        include/Element.h
+        src/Document.cpp
+        include/Document.h
+        src/AssocVec.cpp
+        include/AssocVec.h
+        src/Tokenizer.cpp
+        include/Tokenizer.h
+        src/Parser.cpp
+        include/Parser.h
+)

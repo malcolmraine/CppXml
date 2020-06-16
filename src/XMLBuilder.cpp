@@ -2,7 +2,7 @@
 // Created by Malcolm Hall on 6/8/20.
 //
 
-#include "XMLBuilder.h"
+#include "../include/XMLBuilder.h"
 
 #include <utility>
 
@@ -12,7 +12,8 @@
  *
  * @brief
  */
-XMLBuilder::XMLBuilder() {
+CppXml::XMLBuilder::XMLBuilder() {
+
 
 }
 
@@ -22,8 +23,7 @@ XMLBuilder::XMLBuilder() {
  *
  * @brief
  */
-XMLBuilder::~XMLBuilder()
-{
+CppXml::XMLBuilder::~XMLBuilder() {
 //    auto it = _documents.begin();
 //
 //    while (it != _documents.end())
@@ -38,13 +38,11 @@ XMLBuilder::~XMLBuilder()
  * @param docName
  * @return
  */
-Document *XMLBuilder::findDocument(const std::string& docName) {
-    if (_documents.count(docName))
-    {
+CppXml::Document *CppXml::XMLBuilder::findDocument(const std::string &docName) {
+    if (_documents.count(docName)) {
         return _documents[docName];
     }
-    else
-    {
+    else {
         return nullptr;
     }
 }
@@ -61,33 +59,34 @@ Document *XMLBuilder::findDocument(const std::string& docName) {
  * @param metadata
  * @return
  */
-Document* XMLBuilder::newDocument(
+CppXml::Document *CppXml::XMLBuilder::newDocument(
         std::string docName,
         float version,
         XmlEncoding_t encoding,
         bool standalone,
         bool metadata
-        )
-{
+) {
     auto *doc = new Document(std::move(docName));
     doc->version = version;
     doc->encoding = std::move(encoding);
     doc->standalone = standalone;
 
-    if (metadata)
-    {
+    if (metadata) {
         doc->addMetaData();
     }
-    _documents.insert(std::pair<std::string, Document*>(doc->name, doc));
+    _documents.insert(std::pair<std::string, Document *>(doc->name, doc));
     return doc;
 }
 
 
+bool CppXml::XMLBuilder::saveDocument(std::string docName) {
+    return false;
+}
+
 /******************************************************************************
  * @brief
  */
-void XMLBuilder::enablePrettyPrint()
-{
+void CppXml::XMLBuilder::enablePrettyPrint() {
     prettyPrint = true;
 }
 
@@ -95,11 +94,9 @@ void XMLBuilder::enablePrettyPrint()
 /******************************************************************************
  * @brief
  */
-void XMLBuilder::disablePrettyPrint()
-{
+void CppXml::XMLBuilder::disablePrettyPrint() {
     prettyPrint = false;
 }
-
 
 
 

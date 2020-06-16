@@ -2,12 +2,14 @@
 // Created by Malcolm Hall on 6/8/20.
 //
 
-#include "Element.h"
+#include "../include/Element.h"
 #include <iostream>
 #include <utility>
-
+#include "../include/helper.h"
 
 #define CLOSING_TAG(x)    "<\\" + x + ">"
+#define OPENING_TAG(name, attributes)   "<" + name + " " + attributes + ">"
+#define SELFCLOSING_TAG(name, attributes)   "<" + name + " " + attributes + "\\>"
 #define ATTRIBUTE(x, y)   " " + x + "=" + "\"" + y + "\""
 #define TABS(n)           std::string(n, '\t')
 
@@ -16,7 +18,7 @@
  * @brief
  * @param elementName
  */
-Element::Element(std::string elementName) {
+CppXml::Element::Element(std::string elementName) {
     name = std::move(elementName);
     parent = nullptr;
 }
@@ -25,7 +27,7 @@ Element::Element(std::string elementName) {
 /******************************************************************************
  * @brief
  */
-Element::~Element() {
+CppXml::Element::~Element() {
     freeChildren(this);
 }
 
@@ -35,14 +37,15 @@ Element::~Element() {
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, std::string value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, std::string value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = STRING;
     attribute->value = std::move(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -51,14 +54,15 @@ void Element::addAttribute(std::string attributeName, std::string value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, char value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, char value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = CHAR;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -69,14 +73,15 @@ void Element::addAttribute(std::string attributeName, char value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, unsigned char value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned char value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = UCHAR;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -87,14 +92,15 @@ void Element::addAttribute(std::string attributeName, unsigned char value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, float value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, float value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = FLOAT;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -105,14 +111,15 @@ void Element::addAttribute(std::string attributeName, float value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, double value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, double value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = DOUBLE;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -123,14 +130,15 @@ void Element::addAttribute(std::string attributeName, double value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, int value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, int value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = INT;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -141,14 +149,15 @@ void Element::addAttribute(std::string attributeName, int value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, unsigned int value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned int value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = UINT;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -159,14 +168,15 @@ void Element::addAttribute(std::string attributeName, unsigned int value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, long value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = LONG;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -177,14 +187,15 @@ void Element::addAttribute(std::string attributeName, long value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, unsigned long value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned long value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = ULONG;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -195,14 +206,15 @@ void Element::addAttribute(std::string attributeName, unsigned long value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, long long value)
-{
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long long value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = LONG_LONG;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
 }
 
 
@@ -213,14 +225,25 @@ void Element::addAttribute(std::string attributeName, long long value)
  * @param attributeName
  * @param value
  */
-void Element::addAttribute(std::string attributeName, unsigned long long value)
-{
+CppXml::Element* CppXml::Element::addAttribute(std::string attributeName, unsigned long long value) {
     auto *attribute = new Attribute_t;
 
     attribute->name = std::move(attributeName);
     attribute->type = ULONG_LONG;
     attribute->value = std::to_string(value);
     attributes.push(attribute->name, attribute);
+
+    return this;
+}
+
+
+/******************************************************************************
+ * @brief
+ * @return
+ */
+CppXml::Element *CppXml::Element::addTextContent(const std::string& text) {
+    textContent += text;
+    return this;
 }
 
 
@@ -230,38 +253,36 @@ void Element::addAttribute(std::string attributeName, unsigned long long value)
  * @brief
  * @return
  */
-std::string Element::toString()
-{
-    std::string subtreeString = "\n" + TABS(nestLvl) + "<" + name;
+std::string CppXml::Element::elementToString() {
+    std::string escapedName = escapeString(name);
+    std::string subtreeString = "\n" + TABS(nestLvl) + "<" + escapedName;
 
-    if (!attributes.empty())
-    {
-        for (ssize_t i = 0; i < attributes.size(); i++)
-        {
-            subtreeString += ATTRIBUTE(attributes[i]->name, attributes[i]->value);
+    if (!attributes.empty()) {
+        for (ssize_t i = 0; i < attributes.size(); i++) {
+            subtreeString += ATTRIBUTE(
+                    escapeString(attributes[i]->name),
+                    escapeString(attributes[i]->value)
+                    );
         }
     }
 
     subtreeString += ">";
 
-    if (!textContent.empty())
-    {
+    if (!textContent.empty()) {
         if (!children.empty()) {
             subtreeString += "\n";
         }
-        subtreeString += textContent;
+        subtreeString += escapeString(textContent);
     }
 
-    if (!children.empty())
-    {
-        for (ssize_t i = 0; i < children.size(); i++)
-        {
-            subtreeString += children[i]->toString();
+    if (!children.empty()) {
+        for (ssize_t i = 0; i < children.size(); i++) {
+            subtreeString += children[i]->elementToString();
         }
-        subtreeString += "\n" + TABS(nestLvl) ;
+        subtreeString += "\n" + TABS(nestLvl);
     }
 
-    subtreeString += CLOSING_TAG(name);
+    subtreeString += CLOSING_TAG(escapedName);
 
     return subtreeString;
 }
@@ -273,16 +294,12 @@ std::string Element::toString()
  * @brief
  * @param parentNode
  */
-void Element::freeChildren(Element* parentNode)
-{
-    for (ssize_t i = 0; i < parentNode->children.size(); i++)
-    {
-        if (!parentNode->children[i]->attributes.empty())
-        {
+void CppXml::Element::freeChildren(Element *parentNode) {
+    for (ssize_t i = 0; i < parentNode->children.size(); i++) {
+        if (!parentNode->children[i]->attributes.empty()) {
             freeAttributes(parentNode->children[i]);
         }
-        if (!parentNode->children[i]->children.empty())
-        {
+        if (!parentNode->children[i]->children.empty()) {
             freeChildren(parentNode->children[i]);
             delete parentNode->children[i];
         }
@@ -296,10 +313,8 @@ void Element::freeChildren(Element* parentNode)
  * @brief
  * @param parentNode
  */
-void Element::freeAttributes(Element *parentNode)
-{
-    for (ssize_t i = 0; i < parentNode->attributes.size(); i++)
-    {
+void CppXml::Element::freeAttributes(Element *parentNode) {
+    for (ssize_t i = 0; i < parentNode->attributes.size(); i++) {
         delete parentNode->attributes[i];
     }
 }
@@ -309,7 +324,7 @@ void Element::freeAttributes(Element *parentNode)
  * @brief
  * @return
  */
-std::string Element::getElementKey() {
+std::string CppXml::Element::getElementKey() {
     return _elementKey;
 }
 
@@ -318,9 +333,10 @@ std::string Element::getElementKey() {
  * @brief
  * @param key
  */
-void Element::setElementKey(std::string key) {
+void CppXml::Element::setElementKey(std::string key) {
     _elementKey = std::move(key);
 }
+
 
 
 
