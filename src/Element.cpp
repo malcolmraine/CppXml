@@ -8,8 +8,8 @@
 #include "../include/helper.h"
 
 #define CLOSING_TAG(x)    "<\\" + x + ">"
-#define OPENING_TAG(name, attributes)   "<" + name + " " + attributes + ">"
-#define SELFCLOSING_TAG(name, attributes)   "<" + name + " " + attributes + "\\>"
+#define OPENING_TAG(name, attributes)   "<" + name + attributes + ">"
+#define SELFCLOSING_TAG(name, attributes)   "<" + name + attributes + "\\>"
 #define ATTRIBUTE(x, y)   " " + x + "=" + "\"" + y + "\""
 #define TABS(n)           std::string(n, '\t')
 
@@ -255,18 +255,21 @@ CppXml::Element *CppXml::Element::addTextContent(const std::string& text) {
  */
 std::string CppXml::Element::elementToString() {
     std::string escapedName = escapeString(name);
-    std::string subtreeString = "\n" + TABS(nestLvl) + "<" + escapedName;
+    std::string subtreeString = "\n" + TABS(nestLvl);
+    std::string attributeString;
 
     if (!attributes.empty()) {
         for (ssize_t i = 0; i < attributes.size(); i++) {
-            subtreeString += ATTRIBUTE(
+            attributeString += ATTRIBUTE(
                     escapeString(attributes[i]->name),
                     escapeString(attributes[i]->value)
                     );
         }
     }
 
-    subtreeString += ">";
+    subtreeString += OPENING_TAG(escapedName, attributeString);
+
+    //subtreeString += ">";
 
     if (!textContent.empty()) {
         if (!children.empty()) {

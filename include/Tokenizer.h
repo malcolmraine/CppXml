@@ -12,10 +12,21 @@
 /**************************************************************************************************
 *       INCLUDES AND DECLARATIONS
 **************************************************************************************************/
+#include <string>
+#include <fstream>
 
 namespace CppXml {
     class Tokenizer {
+    public:
+        Tokenizer();
+        ~Tokenizer();
+        char consume();
+        void loadFile(std::string file);
 
+    protected:
+        std::string fileName;
+        std::fstream fileStream;
+        char lastTok;
     };
 }
 

@@ -18,8 +18,6 @@ namespace CppXml {
 
     const std::string ELEM_KEY_IDX_DELIM = "?_#$#";
 
-    int getElementKeyIdx(const std::string& x);
-    std::string getElementKeyName(const std::string& x);
 
     class Tree {
     public:

@@ -10,20 +10,7 @@
 
 #define PATH_REPR_DELIM "->"
 #define IDENTICAL_TAG_LIMIT 10000
-
-
-int CppXml::getElementKeyIdx(const std::string& x)
-{
-    unsigned long delimEndPos = x.find(ELEM_KEY_IDX_DELIM) + ELEM_KEY_IDX_DELIM.length();
-    return std::stoi(x.substr(delimEndPos,delimEndPos + 1));
-}
-
-std::string CppXml::getElementKeyName(const std::string& x)
-{
-    return x.substr(0, x.find(ELEM_KEY_IDX_DELIM));
-}
-
-
+#define DEFAULT_IDX_SUFFIX  CppXml::ELEM_KEY_IDX_DELIM + "0"
 
 /******************************************************************************
  * Tree
@@ -91,7 +78,7 @@ CppXml::Element* CppXml::Tree::addElement(const std::string& elementName, Elemen
     {
         newElement->setElementKey(elementKey);
     }
-    
+
     /* The element is pushed onto the data structure containing all the parent's children. */
     newElement->parent->children.push(elementKey, newElement);
     return newElement;
@@ -149,7 +136,7 @@ CppXml::Element* CppXml::Tree::addElement(const std::string& elementName, Elemen
 
         if (!std::regex_search(s, uniqueSuffixRegex))
         {
-            s += ELEM_KEY_IDX_DELIM + "0";
+            s += DEFAULT_IDX_SUFFIX;
         }
         else
         {
@@ -190,7 +177,6 @@ CppXml::Element* CppXml::Tree::addElement(const std::string& elementName, Elemen
             /* Return the root element if the key is not found in the child object store   */
             return root;
         }
-        std::cout << childKey << std::endl;
     }
 
     return e;
