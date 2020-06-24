@@ -15,18 +15,27 @@
 #include <string>
 #include <fstream>
 
+
 namespace CppXml {
+    typedef struct {
+
+    } Token_t;
+
+    const unsigned int bufSize = 5;
+
     class Tokenizer {
     public:
         Tokenizer();
         ~Tokenizer();
-        char consume();
+        std::string consume();
+        std::string peek(int n = 1);
         void loadFile(std::string file);
 
     protected:
         std::string fileName;
         std::fstream fileStream;
         char lastTok;
+        char buf[bufSize] = {'\0', '\0', '\0', '\0', '\0'};
     };
 }
 

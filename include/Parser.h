@@ -14,6 +14,8 @@
 **************************************************************************************************/
 #include <string>
 #include <vector>
+#include <map>
+#include "Tokenizer.h"
 
 namespace CppXml {
 
@@ -27,12 +29,21 @@ enum ComponentType {
 };
 
 enum ConsumptionState {
+    UNKNOWN,
+    INIT,
     XML_DECLARATION_CONSUMPTION,
+    XML_DECLARATION_CONSUMPTION_END,
+    UNKNOWN_TAG_CONSUMPTION,
     OPENING_TAG_CONSUMPTION,
+    OPENING_TAG_CONSUMPTION_END,
     SELF_CLOSING_TAG_CONSUMPTION,
+    SELF_CLOSING_TAG_CONSUMPTION_END,
     CLOSING_TAG_CONSUMPTION,
+    CLOSING_TAG_CONSUMPTION_END,
     ATTRIBUTE_NAME_CONSUMPTION,
+    ATTRIBUTE_NAME_CONSUMPTION_END,
     ATTRIBUTE_VALUE_CONSUMPTION,
+    ATTRIBUTE_VALUE_CONSUMPTION_END,
     TEXT_CONTENT_CONSUMPTION
 };
 
@@ -68,11 +79,13 @@ typedef struct {
          */
         void parse();
         inline XmlComponent_t* activeComponent() { return components.back(); };
-        void loadDocument(std::string docName);
+        void loadDocument(std::string file);
+        void stateTransition(char c);
         void buildDocument();
         bool fileExists();
 
     protected:
+        Tokenizer tokenizer;
         /* This is just for holding the tag components as we build the document.
          * We need to make sure that all tags are closed. When we encounter a tag,
          * the component struct will be pushed onto the stack. WHen we encounter a closing
@@ -87,6 +100,7 @@ typedef struct {
 
         ConsumptionState state;
         std::string docName;
+        bool fileLoaded;
 
     };
 }

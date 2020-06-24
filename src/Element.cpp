@@ -32,20 +32,25 @@ CppXml::Element::~Element() {
 }
 
 
+inline CppXml::Element* CppXml::Element::addAttributeHelper(std::string attributeName, std::string value, CppXml::Type type)
+{
+    auto *attribute = new Attribute_t;
+
+    attribute->name = std::move(attributeName);
+    attribute->type = type;
+    attribute->value = std::move(value);
+    attributes.push(attribute->name, attribute);
+    return this;
+}
+
 /******************************************************************************
  * @brief
  * @param attributeName
  * @param value
  */
-CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, std::string value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = STRING;
-    attribute->value = std::move(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, std::string value)
+{
+    return addAttributeHelper(std::move(attributeName), value, STRING);
 }
 
 
@@ -55,14 +60,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, std::s
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, char value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = CHAR;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), CHAR);
 }
 
 
@@ -74,14 +72,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, char v
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned char value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = UCHAR;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), UCHAR);
 }
 
 
@@ -93,14 +84,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsign
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, float value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = FLOAT;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), FLOAT);
 }
 
 
@@ -112,14 +96,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, float 
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, double value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = DOUBLE;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), DOUBLE);
 }
 
 
@@ -131,14 +108,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, double
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, int value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = INT;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), INT);
 }
 
 
@@ -150,14 +120,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, int va
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned int value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = UINT;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), UINT);
 }
 
 
@@ -169,14 +132,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsign
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = LONG;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), LONG);
 }
 
 
@@ -188,14 +144,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long v
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsigned long value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = ULONG;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), ULONG);
 }
 
 
@@ -207,14 +156,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, unsign
  * @param value
  */
 CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long long value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = LONG_LONG;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), LONG_LONG);
 }
 
 
@@ -226,14 +168,7 @@ CppXml::Element *CppXml::Element::addAttribute(std::string attributeName, long l
  * @param value
  */
 CppXml::Element* CppXml::Element::addAttribute(std::string attributeName, unsigned long long value) {
-    auto *attribute = new Attribute_t;
-
-    attribute->name = std::move(attributeName);
-    attribute->type = ULONG_LONG;
-    attribute->value = std::to_string(value);
-    attributes.push(attribute->name, attribute);
-
-    return this;
+    return addAttributeHelper(std::move(attributeName), std::to_string(value), ULONG_LONG);
 }
 
 
@@ -339,9 +274,6 @@ std::string CppXml::Element::getElementKey() {
 void CppXml::Element::setElementKey(std::string key) {
     _elementKey = std::move(key);
 }
-
-
-
 
 
 

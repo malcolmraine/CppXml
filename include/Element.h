@@ -10,9 +10,8 @@
 #include "AssocVec.h"
 
 namespace CppXml {
-
     enum Type {
-        UNKNOWN = -1, STRING, CHAR, UCHAR, FLOAT, DOUBLE, INT, LONG, LONG_LONG, UINT, ULONG, ULONG_LONG
+        UNKNOWN, STRING, CHAR, UCHAR, FLOAT, DOUBLE, INT, LONG, LONG_LONG, UINT, ULONG, ULONG_LONG
     };
 
 
@@ -28,6 +27,8 @@ namespace CppXml {
         explicit Element(std::string elementName);
 
         ~Element();
+
+        inline Element* addAttributeHelper(std::string attributeName, std::string value, CppXml::Type type);
 
         Element *addAttribute(std::string attributeName, std::string value);
 
